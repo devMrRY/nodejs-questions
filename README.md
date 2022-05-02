@@ -10,11 +10,11 @@
 
 | Sl.No|  Questions       |
 |------|------------------|
-| 01. |[How V8 compiles the js code ?](#q-how-v8-compiles-the-js-code)|
-| 02. |[What are Hidden Classes in Nodejs ?](#q-what-are-hidden-classes-in-nodejs)|
-| 03. |[What is INLINE CACHE ?](#q-what-is-inline-cache)|
-| 04. |[What is FEEDBACK VECTOR ?](#q-what-is-feedback-vector)|
-| 05. |[Explain Garbage Collector ?](#q-explain-garbage-collector)|
+| 01. |[How V8 compiles the js code ?](#q-how-v8-compiles-the-js-code-)|
+| 02. |[What are Hidden Classes in Nodejs ?](#q-what-are-hidden-classes-in-nodejs-)|
+| 03. |[What is INLINE CACHE ?](#q-what-is-inline-cache-)|
+| 04. |[What is FEEDBACK VECTOR ?](#q-what-is-feedback-vector-)|
+| 05. |[Explain Garbage Collector ?](#q-explain-garbage-collector-)|
 
 <br/>
 
