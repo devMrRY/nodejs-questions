@@ -12,7 +12,7 @@
 | 06. |[What are V8 templates ?](#q-what-are-v8-templates-)|
 | 07. |[Explain Babel ?](#q-explain-babel-)|
 | 08. |[What are React Refs ?](#q-what-are-react-refs-)|
-| 09. |[Explain how browsers renders html ?](#q-explain-how-browser-renders-html-)|
+| 09. |[Explain how browsers renders html ?](#q-explain-how-browsers-renders-html-)|
 
 <br/>
 
