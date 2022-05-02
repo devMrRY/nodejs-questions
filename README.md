@@ -15,7 +15,7 @@
 | 03. |[What is INLINE CACHE ?](#q-what-is-inline-cache-)|
 | 04. |[What is FEEDBACK VECTOR ?](#q-what-is-feedback-vector-)|
 | 05. |[Explain Garbage Collector ?](#q-explain-garbage-collector-)|
-| 06. |[What is V8 templates ?](#q-what-is-v8-templates-)|
+| 06. |[What are V8 templates ?](#q-what-are-v8-templates-)|
 | 07. |[Explain Babel ?](#q-explain-babel-)|
 | 08. |[What are React Refs ?](#q-what-are-react-refs-)|
 | 09. |[Explain how browsers renders html ?](#q-explain-how-browser-renders-html-)|
@@ -94,7 +94,7 @@ node.js uses 3 techniques for garbage collecting
     <b><a href="#">↥ back to top</a></b>
 </div>
 
-## Q. ***What is V8 templates ?***
+## Q. ***What are V8 templates ?***
 
 templates are the blueprint of js functions/objects in which you can wrap c++ functions/objects/structure and can change or call c++ things from js.
 
@@ -139,8 +139,8 @@ SYNTAX => input ref="inputref" // referenced by this.refs.inputref
 **Cons of inline callback ref** :-
     it gets updated twice first render once with null and then with actual HTML element.
 
-4. ref will get updated before componentDidMount and componentDidUpdate.
-5. useRef will always return a same reference of object with { current: ''} property
+1. ref will get updated before componentDidMount and componentDidUpdate.
+2. useRef will always return a same reference of object with { current: ''} property
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
