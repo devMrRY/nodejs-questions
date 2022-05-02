@@ -1,19 +1,13 @@
 # Node.js Interview Questions
 
-## Table of Contents
-
-* *[NodeJS APIs](nodejs-api.md)*
-* *[NodeJS Coding Practice](nodejs-programming.md)*
-* *[NodeJS Commands](nodejs-commands.md)*
-
 <br/>
 
 | Sl.No|  Questions       |
 |------|------------------|
 | 01. |[How V8 compiles the js code ?](#q-how-v8-compiles-the-js-code-)|
 | 02. |[What are Hidden Classes in Nodejs ?](#q-what-are-hidden-classes-in-nodejs-)|
-| 03. |[What is INLINE CACHE ?](#q-what-is-inline-cache-)|
-| 04. |[What is FEEDBACK VECTOR ?](#q-what-is-feedback-vector-)|
+| 03. |[What is Inline Cache ?](#q-what-is-inline-cache-)|
+| 04. |[What is Feedback Vector ?](#q-what-is-feedback-vector-)|
 | 05. |[Explain Garbage Collector ?](#q-explain-garbage-collector-)|
 | 06. |[What are V8 templates ?](#q-what-are-v8-templates-)|
 | 07. |[Explain Babel ?](#q-explain-babel-)|
@@ -64,7 +58,7 @@ if order is diff then there will be different hidden class so inline cache can't
     <b><a href="#">↥ back to top</a></b>
 </div>
 
-## Q. ***What is INLINE CACHE ?***
+## Q. ***What is Inline Cache ?***
 
 Inline Cache: Inline Cache is a data structure used to keep track of the addresses of the properties on objects, thereby reducing the lookup time. It tracks all the LOAD, STORE, and CALL events within a function, by maintaining a Feedback Vector.
 
@@ -72,7 +66,7 @@ Inline Cache: Inline Cache is a data structure used to keep track of the address
     <b><a href="#">↥ back to top</a></b>
 </div>
 
-## Q. ***What is FEEDBACK VECTOR ?***
+## Q. ***What is Feedback Vector ?***
 
 Feedback Vector is simply an array used to track all the Inline Caches of a particular function.
 
