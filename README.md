@@ -15,6 +15,10 @@
 | 03. |[What is INLINE CACHE ?](#q-what-is-inline-cache-)|
 | 04. |[What is FEEDBACK VECTOR ?](#q-what-is-feedback-vector-)|
 | 05. |[Explain Garbage Collector ?](#q-explain-garbage-collector-)|
+| 06. |[What is V8 templates ?](#q-what-is-v8-templates-)|
+| 07. |[Explain Babel ?](#q-explain-babel-)|
+| 08. |[What are React Refs ?](#q-what-are-react-refs-)|
+| 09. |[Explain how browsers renders html ?](#q-explain-how-browser-renders-html-)|
 
 <br/>
 
@@ -85,6 +89,103 @@ node.js uses 3 techniques for garbage collecting
 **Incremental** : main js thread move back and forth from main execution and garbage collection untill all the garbage gets collected.
 
 **Concurent** : In this main thread is not disturbed and all the garbage collection handled by helper threads.
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***What is V8 templates ?***
+
+templates are the blueprint of js functions/objects in which you can wrap c++ functions/objects/structure and can change or call c++ things from js.
+
+Functions templates: js functions with which one can associate c++ callbacks which gets invoked when js function gets called.
+
+Object template: js objects with which two c++ callbacks accessor(gets invoked only on special property) and interceptor(gets invoked on each property of object) callbacks.
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***Explain Babel ?***
+
+Babel is a transpiler which converts ES6 code into backward compatible ES5.
+
+It is built on plugin system which converts it into AST (abstract syntax tree).
+
+It's plugins provide him the instructions on how to convert the code.
+as it's plugins are small so one plugin holds only one feature.
+
+Presets are the default group of plugins used for transpilation.
+ [@babel/preset-env, @babel/preset-flow, @babel/preset-react ( for React and it supports JSX Syntax ), @babel/preset-typescript]
+
+**@babel/preset-env** :- it is responsible for knowing the babel to which level transformation is required.
+    For example, you can create a .babelrc file in the root of your project. and add support for last 2 versions of the browser.
+    This will ensure that when the browser is updated it will stop transpiling of the old browser version and will transpile for the new one.
+
+**@babel/polyfill** : - it helps in providing the support of latest features of a language to work in browsers if browser provide no/less support for it.
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***What are React Refs ?***
+
+SYNTAX => input ref="inputref" // referenced by this.refs.inputref
+
+1. string refs are not composable (like if a library put a ref on passed children then you can't put your own ref) but callback refs are.
+2. string refs gives references to outermost parent instead of acutal dom element or component
+3. React have to keep track of current component which makes it little slow. also causes weird bugs when duplicated in bundle.js
+
+**Cons of inline callback ref** :-
+    it gets updated twice first render once with null and then with actual HTML element.
+
+4. ref will get updated before componentDidMount and componentDidUpdate.
+5. useRef will always return a same reference of object with { current: ''} property
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***Explain how browsers renders html ?***
+
+**DOM** is a high level (web api) provided by browser which reads a text file (with content type text/html and charset utf-8 ) Aka html/XML page.
+DOM (forgiving nature) converts each html element (including comments etc) into it's corresponding node with the help of Node Class -> HTMLDivElement Class (constructor function).
+eventually everything on webpage is just javascript (there's no such thing as html or css on browsers).
+
+**CSSOM (CSS Object Model)** tree like str for our js nodes by specifying particular css selectors (means we are putting some properties like color, display etc in our js node's style attribute ).
+every browser has it's own css file (user agent stylesheet) which will be inherited by each js node which provides default value to style attribute and based on some specificity rules those default
+values can be overriden by external css comes from server.
+CSSOM doesn't create node for non displaying js nodes like title, meta, head etc.
+CSS is Cascading style sheet because each js node inherits default value from (user agent stylesheet) which is called cascading of styles.
+
+Render Tree (DOM + CSSOM) it doesn't contain js nodes which doesn't hold any space inside pixel matrix (like elements with display: none property).
+
+**Layout/reflow/browser** reflow process of calculating geometric information and position of each js node in pixels in viewport. This process also gets triggered on scroll/browser resizing etc.
+
+Paint operation.
+
+**Rasterization** process of painting each layer after dividing them into small sub layers and paints all of them seperately into software bitmaps and then uploads them to GPU textures.
+each layer painting operation takes place into different threads to speedup the process.
+
+**Composition** process of grouping all the layers created in previous step.
+
+**Dom Parser** is responsible for parsing js nodes from html file. Dom parser has DomParser api which has parseFromString prototype method which is responsible from parsing html from 
+string. 
+Dom parser starts it's job asap it gets it's first few bytes from server.
+
+all external files such as scripts, css, images downloads in seperate thread other than main thread in which html page is downloading.
+script files download occurs in different thread but it pause the execution of main thread untill downloading for that scipt gets completed.
+All .js files they are parser blocking
+
+**Defer** :- downloads in parallel thread and execute at the end of html parsing.
+**Async** :- downloads in parallel therad but halts parsing html after downloading script and starts executing script.
+
+**Speculative parsing** :- like Promise.all(script1, script2)
+
+css are not parser blocking but they are render blocking and sometimes script blocking.
+css downloading is not incremental just to avoid FOUC (flash of unstyled content)
+
+**Note :** It is not safe execute script file before css completely loads as if script runs prior to css loads completely it will execute with false values of style tag of a particular js node as it may be changed by later css.
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
