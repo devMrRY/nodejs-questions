@@ -27,20 +27,20 @@ Executing the code
 1. Parsing splits all the code into small tokens and these token are then transfered to syntax parser which will create abstract syntax tree (AST).
 
 2. V8 uses JIT compiler takes in which interpretetion and compiling goes hand in hand like
-       first inerpretor checks for the patterns that are frequently used like variables, functions and compiles the code to optimize the process if type of variable or function arguments changes then 
-       decompilation takes place the and control shifts to interpretetion again.
+    first inerpretor checks for the patterns that are frequently used like variables, functions and compiles the code to optimize the process if type of variable or function arguments changes then 
+    decompilation takes place the and control shifts to interpretetion again.
 
-       V8 uses Ignition interpretor which takes AST as input and gives byte code as output while interpretion is taking place Turbofan compiler communicates with interpretor and converts byte
-       code into machine code.
+    V8 uses Ignition interpretor which takes AST as input and gives byte code as output while interpretion is taking place Turbofan compiler communicates with interpretor and converts byte
+    code into machine code.
 
-       Ignition interpretor interpretes the code using object structure where keys are the byte code and values are the functions (which are ordered in form of list) which handles the byte code.
+    Ignition interpretor interpretes the code using object structure where keys are the byte code and values are the functions (which are ordered in form of list) which handles the byte code.
 
 3. In Execution phase: Memory heap and Call stack is used
-       Memory heap:-  where all the variables and functions gets memory allocated
-       Call stack:-  where all the functions calls get pushed and poped
+    **Memory heap**:-  where all the variables and functions gets memory allocated
+    **Call stack**:-  where all the functions calls get pushed and poped
 
-let Person = {name: "rahul"}
-Person.age = 20;
+        let Person = {name: "rahul"}
+        Person.age = 20;
 
 **Note**: In this above code for assigning new property age to Person object a linear search is required on list. to overcome that
       node.js uses Inline Cache and Hidden classes.
