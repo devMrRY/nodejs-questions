@@ -12,7 +12,9 @@
 | 06. |[What are V8 templates ?](#q-what-are-v8-templates-)|
 | 07. |[Explain Babel ?](#q-explain-babel-)|
 | 08. |[What are React Refs ?](#q-what-are-react-refs-)|
-| 09. |[Explain how browsers renders html ?](#q-explain-how-browsers-renders-html-)|
+| 09. |[What is Sharding and what are the pros and cons ?](#q-what-is-sharding-and-what-are-the-pros-and-cons-)|
+| 10. |[What is Shadowing ?](#q-what-is-shadowing-)|
+| 11. |[Explain how browsers renders html ?](#q-explain-how-browsers-renders-html-)|
 
 <br/>
 
@@ -135,6 +137,80 @@ SYNTAX => input ref="inputref" // referenced by this.refs.inputref
 
 1. ref will get updated before componentDidMount and componentDidUpdate.
 2. useRef will always return a same reference of object with { current: ''} property
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+
+
+## Q. ***What is Sharding and what are the pros and cons ?***
+
+It is a technique of horizontal scaling to reduce the load on main database.
+It constitues 3 components:-
+
+1. Config Server (one)
+2. Query Router (many)
+3. Shards (many)
+
+***Config Server*** :- listens request and had metadata for query as well.
+
+***Query Router*** :- responsible for making query to shards gets data from shards and pass it to Config Server.
+
+***Shards*** :- Stores actual data based on shard key.
+
+**Note** :- Sharding at collection level needs sharding enabled at db level as well
+
+2 types of Sharding techniques :-
+
+a. ***Range Based Sharding*** :- In this data is divided in ranges.
+    eg: user starts with name 
+        (a-f) shard 1
+        (g-m) shard 2
+        (n-z) shard 3
+
+b. ***Hash Based Sharding*** :- it used shard key (it should be static). and shard key can be  combination of multiple columns as well. Uniform distribution of data as our hashed algorithm decides data should go in which shard
+    
+increasing and decreasing no. of shards is difficult as our hashing algorithm needs to be changed
+and data migration needs to be done.
+solution of this drawback is consistent hashing in which along with data we hash server also and
+make copy of these servers so when any server got replaced/added then less no. of data needs to 
+be migrated.
+
+**Pros of Sharding**
+1. reduces the load from main database.
+2. if sharded properly can speed up the db query process.
+3. can be good solution for db failOver (on downtime switch to secondary db).
+4. maintains load balancing at db level
+
+**Cons of Sharding**
+1. no uniform distribution strategy of data.
+2. can increase the complexity for data querying if data needed by query is present in diff shards.
+3. lots of chunk data
+4. some shards may act as load enhancer which may eventually leads to server failure.
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***What is Shadowing ?***
+Shadowing is a technique in js by which you can shadow the a variable in current lexical scope.
+
+    eg: var a='rahul';
+        {
+            let a='test';  // shadowing var a with let a
+            console.log(a);
+        }
+        console.log(a);
+
+***Illegal shadowing*** :- when try to shadow let, const variables by var variable having same name
+
+    eg: let a='rahul';
+        {
+            var a='test';   // illegal shadowing
+            console.log(a);
+        }
+        it will throw syntax error that a is already defined.
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
