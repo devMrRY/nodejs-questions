@@ -15,6 +15,8 @@
 | 09. |[What is Sharding and what are the pros and cons ?](#q-what-is-sharding-and-what-are-the-pros-and-cons-)|
 | 10. |[What is Shadowing ?](#q-what-is-shadowing-)|
 | 11. |[Explain how browsers renders html ?](#q-explain-how-browsers-renders-html-)|
+| 12. |[Difference between rem and em ?](#q-difference-between-rem-and-em-)|
+| 12. |[What is Image map ?](#q-what-is-image-map-)|
 
 <br/>
 
@@ -163,11 +165,12 @@ It constitues 3 components:-
 
 2 types of Sharding techniques :-
 
-a. ***Range Based Sharding*** :- In this data is divided in ranges.
-    eg: user starts with name 
-        (a-f) shard 1
-        (g-m) shard 2
-        (n-z) shard 3
+a. ***Range Based Sharding*** :- In this data is divided in ranges.<br/>
+
+eg: user starts with name 
+    (a-f) shard 1
+    (g-m) shard 2
+    (n-z) shard 3
 
 b. ***Hash Based Sharding*** :- it used shard key (it should be static). and shard key can be  combination of multiple columns as well. Uniform distribution of data as our hashed algorithm decides data should go in which shard
     
@@ -256,6 +259,63 @@ css are not parser blocking but they are render blocking and sometimes script bl
 css downloading is not incremental just to avoid FOUC (flash of unstyled content)
 
 **Note :** It is not safe execute script file before css completely loads as if script runs prior to css loads completely it will execute with false values of style tag of a particular js node as it may be changed by later css.
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***Difference between rem and em ?***
+
+**em** :- relative to parent element
+
+* The font-size of the .child element will be 40px (2*20px).
+* The margin of .child will be 60px. That’s 1.5 times the font-size of our element (1.5*40px).
+
+        <style>
+            .parent {
+                font-size: 20px;
+            }
+        
+            .child-em {
+                font-size: 2em;
+                margin: 1.5em;
+            }
+        </style>
+**rem** :- relative to root font-size if root not mentioned then browswers default which is 16px
+
+* The font-size of the .child element will be 60px (2*30px).
+* The margin of .child will be 45px. That’s 1.5 times the font-size of the html element (1.5*30px).
+
+        .html {
+            font-size: 30px;
+        }
+    
+        .parent {
+            font-size: 20px;
+        }
+    
+        .child-rem {
+            font-size: 2rem;
+            margin: 1.5rem;
+        }
+          
+
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***What is Image map ?***
+
+Map is tag in HTML5 with which one can describe a sub sections of same image perform different events.
+
+        <img src="workplace.jpg" alt="Workplace" usemap="#workmap">
+
+        <map name="workmap">
+            <area shape="rect" coords="34,44,270,350" alt="Computer" href="computer.htm">
+            <area shape="rect" coords="290,172,333,250" alt="Phone" href="phone.htm">
+            <area shape="circle" coords="337,300,44" alt="Coffee" href="coffee.htm">
+        </map>
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
