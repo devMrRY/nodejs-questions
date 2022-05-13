@@ -13,10 +13,12 @@
 | 07. |[Explain Babel ?](#q-explain-babel-)|
 | 08. |[What are React Refs ?](#q-what-are-react-refs-)|
 | 09. |[What is Sharding and what are the pros and cons ?](#q-what-is-sharding-and-what-are-the-pros-and-cons-)|
-| 10. |[What is Shadowing ?](#q-what-is-shadowing-)|
-| 11. |[Explain how browsers renders html ?](#q-explain-how-browsers-renders-html-)|
-| 12. |[Difference between rem and em ?](#q-difference-between-rem-and-em-)|
-| 12. |[What is Image map ?](#q-what-is-image-map-)|
+| 10. |[What is DB Clustering ?](#q-what-is-db-clustering-)|
+| 11. |[What is Shadowing ?](#q-what-is-shadowing-)|
+| 12. |[Explain how browsers renders html ?](#q-explain-how-browsers-renders-html-)|
+| 13. |[Difference between rem and em ?](#q-difference-between-rem-and-em-)|
+| 14. |[What is Image map ?](#q-what-is-image-map-)|
+| 15. |[Explain inline Boxes ?](#q-explain-inline-boxes-)|
 
 <br/>
 
@@ -196,6 +198,43 @@ be migrated.
     <b><a href="#">↥ back to top</a></b>
 </div>
 
+## Q. ***What is DB Clustering ?***
+
+clusters are of 2 types
+
+* Replica sets
+* Sharded clusters
+
+|                Replica sets                 |             Sharded clusters             |
+|---------------------------------------------|------------------------------------------|
+| Maintain same data set in db instances      | Stores diff data in diff db instances    |
+| provides redundancy and high availability   | used when have huge data set             |
+| Load Balancer                               |                                          |
+| FailOver                                    |                                          |
+
+**Note** clustering constitutes 1 primary node and multiple secondary nodes. If the primary node goes down then one of the secondary node will act as primary node and once the previous primary node works again it will join the secondary instances.
+
+rc.status();
+
+rc.initiate();  // initiates replica set on primary set
+
+rc.add("localhost:1234");
+
+mongodb://localhost:1234,localhost:4567,localhost:8901/?replicaSet=myReplicaSet
+
+In **Load Balancing** also we have 1 primary node and multiple secondary nodes.
+write privelage is available to primary node and on of the below read preferences have to be set.
+
+1. Nearest
+2. primary
+3. primaryPreferred
+4. secondary
+5. secondaryPreferred
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
 ## Q. ***What is Shadowing ?***
 Shadowing is a technique in js by which you can shadow the a variable in current lexical scope.
 
@@ -281,7 +320,7 @@ css downloading is not incremental just to avoid FOUC (flash of unstyled content
                 margin: 1.5em;
             }
         </style>
-**rem** :- relative to root font-size if root not mentioned then browswers default which is 16px
+**rem** :- relative to root font-size if root not mentioned then browsers default which is 16px
 
 * The font-size of the .child element will be 60px (2*30px).
 * The margin of .child will be 45px. That’s 1.5 times the font-size of the html element (1.5*30px).
@@ -316,6 +355,26 @@ Map is tag in HTML5 with which one can describe a sub sections of same image per
             <area shape="rect" coords="290,172,333,250" alt="Phone" href="phone.htm">
             <area shape="circle" coords="337,300,44" alt="Coffee" href="coffee.htm">
         </map>
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***Explain inline Boxes ?***
+Inline Boxes are of two types:
+
+* Replaced Boxes (img, input, video, iframe etc) :- whose width and height are out of the scope of css and depends on the link provided in them.
+* Irreplaced Boxes :- (span, q, textarea, strong, a etc)
+
+Inline Irreplaced Boxes have only left, right margins
+no effect of top, bottom padding unless some background is given to the element.
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. *** ?***
+
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
