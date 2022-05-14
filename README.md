@@ -19,6 +19,7 @@
 | 13. |[Difference between rem and em ?](#q-difference-between-rem-and-em-)|
 | 14. |[What is Image map ?](#q-what-is-image-map-)|
 | 15. |[Explain inline Boxes ?](#q-explain-inline-boxes-)|
+| 16. |[Explain Clustering in nodejs ?](#q-explain-clustering-in-nodejs-)|
 
 <br/>
 
@@ -373,8 +374,43 @@ no effect of top, bottom padding unless some background is given to the element.
     <b><a href="#">↥ back to top</a></b>
 </div>
 
-## Q. *** ?***
+## Q. ***Explain Clustering in nodejs ?***
 
+Clustering in node.js is the ability of nodejs to run multiple nodejs instances on seperate threads that will listen to the same port
+using the cluster module.
+
+**Note** when isolation is not required then use worker_thread module which will allow running multiple application thread in single
+instance.
+
+        import cluster from 'node:cluster';
+        import express from 'express';
+        import { cpus } from 'node:os';
+        import process from 'node:process';
+
+        const numCPUs = cpus().length;
+        const app = express();
+        
+
+        if (cluster.isPrimary) {
+            console.log(`Primary ${process.pid} is running`);
+
+            // Fork workers.
+            for (let i = 0; i < numCPUs; i++) {
+                cluster.fork();
+            }
+
+            cluster.on('exit', (worker, code, signal) => {
+                console.log(`worker ${worker.process.pid} died`);
+            });
+        } else {
+            app.listen(process.env.PORT, () => {
+                console.log(`server is running on port ${process.env.PORT}`)
+            });
+
+            console.log(`Worker ${process.pid} started`);
+        }
+
+cluster.fork() method uses the child_process.fork() method.
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
