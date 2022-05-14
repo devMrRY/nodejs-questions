@@ -20,6 +20,10 @@
 | 14. |[What is Image map ?](#q-what-is-image-map-)|
 | 15. |[Explain inline Boxes ?](#q-explain-inline-boxes-)|
 | 16. |[Explain Clustering in nodejs ?](#q-explain-clustering-in-nodejs-)|
+| 17. |[child_process module in nodejs ?](#q-child_process-module-in-nodejs-)|
+| 18. |[Worker threads in nodejs ?](#q-worker-threads-in-nodejs-)|
+| 19. |[What is Thread pool ?](#q-what-is-thread-pool-)|
+| 20. |[How to gracefully shutdown node server ?](#q-how-to-gracefully-shutdown-node-server-)|
 
 <br/>
 
@@ -389,7 +393,6 @@ instance.
 
         const numCPUs = cpus().length;
         const app = express();
-        
 
         if (cluster.isPrimary) {
             console.log(`Primary ${process.pid} is running`);
@@ -411,6 +414,89 @@ instance.
         }
 
 cluster.fork() method uses the child_process.fork() method.
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***child_process module in nodejs ?***
+
+child_process module provides the ability to spawn(reproduce) a new subProcess.
+
+It has 4 major functions:- 
+
+1. exec :- spawns a shell by default, and executes command inside that and it returns a buffer which is why it is only used for small
+computation.
+2. execFile :- same as exec the only difference is it doesn't spawn shell by default.
+3. spawn :- It spawns a command in new process and returns stream interface to exchange data btw parent and child process, which is why it is the best fit to read/load huge data operations.
+4. fork :- It is a special case of spawn used for establishing communication between parent and child process. It returns an object with built-in communication channel.
+
+**Note** :- In windows .bat, .cmd files are not executable by execFile function as these files can't be run without terminal. so
+they can be executed by spawn function with { shell: true } argument or with exec function or by calling .exe file with these files as argument.
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***Worker threads in nodejs ?***
+Unlike child_process and clusters worker threads creates multiple threads in a single nodejs instance which can share memory among them. They do so by transferring ArrayBuffer(to share data btw threads) instances or sharing SharedArrayBuffer(accessible to each threads act as global store) instances.
+
+It is same like child_process.fork() method as it also establish a connection among all the threads.
+
+        const { Worker, isMainThread, parentPort } = require('node:worker_threads');
+
+        if (isMainThread) {
+            const worker = new Worker(__filename);
+            worker.once('message', (message) => {
+                console.log(message);  // Prints 'Hello, world!'.
+            });
+            worker.postMessage('Hello, world!');
+        } else {
+            // When a message from the parent thread is received, send it back:
+            parentPort.once('message', (message) => {
+                parentPort.postMessage(message);
+            });
+        }
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***What is Thread pool ?***
+
+Thread pool is used by libuv to do I/O operations faster. default thread size is 4 but can be increase to 128 by setting the value of UV_THREADPOOL_SIZE env variable.
+
+**Note**: You cannot change the size of the thread pool once it is created or entered in the event-loop/worker-thread.
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***How to gracefully shutdown node server ?***
+
+1. Handle process kill signal
+2. stop new request from client
+3. stop db connection
+4. exit from process
+
+SIGINT generated when terminationed via CTRL+C
+SIGTERM is a generic signal used to cause program termination.
+SIGKILL also used for program termination but it can't handled, blocked or ignored like SIGTERM. so it is like force kill.
+
+        const server = app.listen(3000, () => console.log('Example app listening on port 3000!'));
+
+        process.on('SIGTERM', () => {
+            console.info('SIGTERM signal received.');
+            console.log('Closing http server.');
+            server.close(() => {
+                console.log('Http server closed.');
+                // boolean means [force], see in mongoose doc
+                mongoose.connection.close(false, () => {
+                console.log('MongoDb connection closed.');
+                process.exit(0);
+                });
+            });
+        });
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
