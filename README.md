@@ -29,7 +29,6 @@
 | 23. |[Why Node.js devs tend to lean towards the Module Requiring vs Dependency Injection ?](#q-why-nodejs-devs-tend-to-lean-towards-the-module-requiring-vs-dependency-injection-)|
 | 24. |[What is the purpose of N-API in Nodejs ?](#q-what-is-the-purpose-of-n-api-in-nodejs-)|
 | 25. |[What are Stubs in Nodejs ?](#q-what-are-stubs-in-nodejs-)|
-| 26. |[Explain the use of Domain Module ?](#q-explain-the-use-of-domain-module-)|
 
 
 <br/>
@@ -566,6 +565,9 @@ Disadvantages
 
 ## Q. ***What is the purpose of N-API in Nodejs ?***
 
+N-API is a api that is used create c++ addons without the use of V8 and only use N-APIs internal functions. It is a part of Node.js itself.
+
+**Note** :- The only difference btw addons created by using internal V8/libuv libraries is that N-API doesn't provide the access to underlying functionality of c++ code.
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
@@ -573,13 +575,18 @@ Disadvantages
 
 ## Q. ***What are Stubs in Nodejs ?***
 
+Stubs are functions which are replacements for the components/modules used in test cases to fasten the test process. similar like mockjs.
 
-<div align="right">
-    <b><a href="#">↥ back to top</a></b>
-</div>
+A use-case can be a file read, when you do not want to read an actual file:
 
-## Q. ***Explain the use of Domain Module ?***
+        var fs = require('fs');
 
+        var readFileStub = sinon.stub(fs, 'readFile', function (path, cb) {  
+            return cb(null, 'I am content of the file');
+        });
+
+        expect(readFileStub).to.be.called;  
+        readFileStub.restore();
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
