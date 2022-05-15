@@ -24,6 +24,13 @@
 | 18. |[Worker threads in nodejs ?](#q-worker-threads-in-nodejs-)|
 | 19. |[What is Thread pool ?](#q-what-is-thread-pool-)|
 | 20. |[How to gracefully shutdown node server ?](#q-how-to-gracefully-shutdown-node-server-)|
+| 21. |[What are the global objects of Nodejs ?](#q-what-are-the-global-objects-of-nodejs-)|
+| 22. |[What are Reactor patterns in Nodejs ?](#q-what-are-reactor-patterns-in-nodejs-)|
+| 23. |[Why Node.js devs tend to lean towards the Module Requiring vs Dependency Injection ?](#q-why-nodejs-devs-tend-to-lean-towards-the-module-requiring-vs-dependency-injection-)|
+| 24. |[What is the purpose of N-API in Nodejs ?](#q-what-is-the-purpose-of-n-api-in-nodejs-)|
+| 25. |[What are Stubs in Nodejs ?](#q-what-are-stubs-in-nodejs-)|
+| 26. |[Explain the use of Domain Module ?](#q-explain-the-use-of-domain-module-)|
+
 
 <br/>
 
@@ -492,11 +499,87 @@ SIGKILL also used for program termination but it can't handled, blocked or ignor
                 console.log('Http server closed.');
                 // boolean means [force], see in mongoose doc
                 mongoose.connection.close(false, () => {
-                console.log('MongoDb connection closed.');
-                process.exit(0);
+                    console.log('MongoDb connection closed.');
+                    process.exit(0);
                 });
             });
         });
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***What are the global objects of Nodejs ?***
+
+That are accessible to all the modules without explicitly require them.
+
+1. **Buffer** :- Buffer class used for handling binary data.
+2. **Console** :- used to print stdout and stderr
+3. **process** :- used to get information regarding the current running process. It is an instance of eventEmitter class.
+4. **global** :- It is a global namespace variables/functions defined in global.variable_name will be accessible by all the modules
+                
+        **Note** : variables/functions defined without global keywords will be local to module only.
+5. **__dirname/__filename** :- not available in global object need script to get the desired output or extract these from path module.
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***What are Reactor patterns in Nodejs ?***
+
+Reactor patterns is an idea of non blocking I/O operations. same like web-api stack known as demultiplexer.
+
+It comprises of these resources:
+
+* De-Multiplexer(e-device with single input and multiple o/p) :- It is a notification interface that is used to handle concurrency.
+* Event Queue
+* Event Loop
+* Request Handler
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***Why Node.js devs tend to lean towards the Module Requiring vs Dependency Injection ?***
+
+Dependency Injection (DI) :- It is a wiring pattern in which depencies are passed as arguments.
+
+Advantages of Module requiring over DI :-
+
+* maintains encapsulation
+* loosely coupled
+* keeps DRY(Don't repeat yourself) rule of oops
+* hard to maintain dependency graph
+
+Disadvantages
+
+* harder to unit test
+* High reusablity
+
+**Note** :- To overcome these problems in DI we can use Dependency Injection Container(DIC) It is a service/custom class which handles dependency graph in your application.
+
+**Dependency Graph** :- order in which dependency modules are invoked
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***What is the purpose of N-API in Nodejs ?***
+
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***What are Stubs in Nodejs ?***
+
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***Explain the use of Domain Module ?***
+
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
