@@ -29,7 +29,8 @@
 | 23. |[Why Node.js devs tend to lean towards the Module Requiring vs Dependency Injection ?](#q-why-nodejs-devs-tend-to-lean-towards-the-module-requiring-vs-dependency-injection-)|
 | 24. |[What is the purpose of N-API in Nodejs ?](#q-what-is-the-purpose-of-n-api-in-nodejs-)|
 | 25. |[What are Stubs in Nodejs ?](#q-what-are-stubs-in-nodejs-)|
-
+| 26. |[Explain Execution Context in js ?](#q-explain-execution-context-in-js-)|
+| 27. |[What is Scope Chain ?](#q-what-is-scope-chain-)|
 
 <br/>
 
@@ -587,6 +588,71 @@ A use-case can be a file read, when you do not want to read an actual file:
 
         expect(readFileStub).to.be.called;  
         readFileStub.restore();
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***Explain Execution Context in js ?***
+
+Execution Context means the environment in which the block of code is getting executed.
+
+* Global Execution Context (GEC): JS Engine by default creates GEC.
+* Functional Execution Context (FEC): for every function js creates a FEC.
+
+Execution Context has 2 phases
+
+1. Compilation Phase
+2. Execution Phase
+
+In Compilation Phase an ExecutionContext object gets created which has properties Variable Object, Scope chain and this.
+
+    executionContextObj = {
+        variableObject: {},
+        scopechain: [],
+        this
+    }
+
+Variable Object stores all the arguments for that function and all the variables initialized with undefined. It doesn't have __proto__ property.
+
+Scope Chain is an array which holds all the Varible Objects in which this function is present.
+
+In Execution Phase all the values gets initialized and ExecutionContext object gets updated
+
+    function funA (a, b) {
+        var c = 3;
+        
+        var d = 2;
+        
+        d = function() {
+            return a - b;
+        }
+    }
+
+    funA(3, 2);
+
+    variableObject = {
+        argumentObject : {
+            0: a,
+            1: b,
+            length: 2
+        },
+        a: 3,
+        b: 2,
+        c: 3,
+        d: undefined then pointer to the function defintion of d
+    }
+
+**Note** : All the function definition will not memory in call stack they will be added in memory heap and will get pointed by the function name which got created in Compilation Phase.
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+
+## Q. ***What is Scope Chain ?***
+
+It's a chain used by Js to access variables present outside the local scope of a function/block with each Execution Context there's a lexical scope. which is a reference to it parent. Global Execution Context has null as it's lexical scope.
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
