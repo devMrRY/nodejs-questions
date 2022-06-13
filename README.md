@@ -461,6 +461,7 @@ computation.
             console.log(stdout);
         })
 
+---------------------------------------------------
         execFile("filePath", (error, stdout, stderr) => {
             if(error){
                 return console.log('error', error);
@@ -471,6 +472,7 @@ computation.
             console.log(stdout);
         })
 
+---------------------------------------------------
         const child = spawn("ls", ["-lh"]);
         child.stdout.on("data", (data) => {
             console.log(data)
@@ -490,6 +492,7 @@ computation.
             console.log('done');
         })
 
+------------------------------------------------------
         const child = fork("./longComputation.js");
         child.send("start");
         child.on("message", (msg) => {
