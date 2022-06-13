@@ -34,6 +34,7 @@
 | 28. |[Explain Socket in nodejs ?](#q-explain-socket-in-nodejs-)|
 | 29. |[Events in nodejs ?](#q-events-in-nodejs-)|
 | 30. |[FileSystem module in nodejs ?](#q-filesystem-module-in-nodejs-)|
+| 31. |[Streams in nodejs ?](#q-streams-in-nodejs-)|
 
 <br/>
 
@@ -448,6 +449,70 @@ computation.
 3. spawn :- It spawns a command in new process and returns stream interface to exchange data btw parent and child process, which is why it is the best fit to read/load huge data operations.
 4. fork :- It is a special case of spawn used for establishing communication between parent and child process. It returns an object with built-in communication channel.
 
+    const { exec, execFile, spawn, fork } = require('child_process);
+
+    exec("ls -lh", (error, stdout, stderr) => {
+        if(error){
+            return console.log('error', error);
+        }
+        if(stderr){
+            return console.log('stderr', stderr);
+        }
+        console.log(stdout);
+    })
+
+    execFile("filePath", (error, stdout, stderr) => {
+        if(error){
+            return console.log('error', error);
+        }
+        if(stderr){
+            return console.log('stderr', stderr);
+        }
+        console.log(stdout);
+    })
+
+    const child = spawn("ls", ["-lh"]);
+    child.stdout.on("data", (data) => {
+        console.log(data)
+    })
+
+    child.stderr.on("data", (data) => {
+        console.log(data)
+    })
+
+    child.on("error", (error) => {
+        console.log(error)
+    })
+
+    child.on("exit", (code, signal) => {
+        if(code) console.log(`process exited with code: ${code}`);
+        if(signal) console.log(`process exited with signal: ${signal}`);
+        console.log('done');
+    })
+
+    const child = fork("./longComputation.js");
+    child.send("start");
+    child.on("message", (msg) => {
+        console.log(msg);
+    })
+
+    longComputation.js
+
+    function compute (){
+        let sum=0;
+        for(let i=0; i<1e9; i++){
+            sum+=i
+        }
+        return sum;
+    }
+
+    process.on("message", () => {
+        if(msg === "start"){
+            let sum = compute();
+            process.send(sum)
+        }
+    })
+
 **Note** :- In windows .bat, .cmd files are not executable by execFile function as these files can't be run without terminal. so
 they can be executed by spawn function with { shell: true } argument or with exec function or by calling .exe file with these files as argument.
 
@@ -460,7 +525,7 @@ Unlike child_process and clusters worker threads creates multiple threads in a s
 
 It is same like child_process.fork() method as it also establish a connection among all the threads.
 
-        const { Worker, isMainThread, parentPort } = require('node:worker_threads');
+        const { Worker, isMainThread, parentPort, workerData } = require('node:worker_threads');
 
         if (isMainThread) {
             const worker = new Worker(__filename);
@@ -755,15 +820,15 @@ class EventEmitter extends Events {}
 
 const ev = new EventEmitter();
 
-ev.on("event type", () => {})
-ev.once("event type", () => {})     // used to listen only once after first time event will reject
-ev.emit("event type", () => {})
-ev.prependListener("event type", () => {})  // appends listener at the starting of the listner queue
-ev.removeListener("event type", () => {})
-ev.removeAllListener(["event type"])
-ev.addListener("event name", () => {})
-ev.eventNames()     // return all the type of events add to the instance
-ev.setMaxListeners(n)       // default listeners to an event is 10
+    ev.on("event type", () => {})
+    ev.once("event type", () => {})     // used to listen only once after first time event will reject
+    ev.emit("event type", () => {})
+    ev.prependListener("event type", () => {})  // appends listener at the starting of the listner queue
+    ev.removeListener("event type", () => {})
+    ev.removeAllListener(["event type"])
+    ev.addListener("event name", () => {})
+    ev.eventNames()     // return all the type of events add to the instance
+    ev.setMaxListeners(n)       // default listeners to an event is 10
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
@@ -814,6 +879,39 @@ ev.setMaxListeners(n)       // default listeners to an event is 10
     fs.watch("file path", options, listener)  // new version for fs.watchFile unlike fs.watchFile it doesn't waste cpu when there's no change
 
     fs.unwatchFile("file path", listener)   // only those listener will stop detecting changes of the file rest will keep on listening the changes.
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***Streams in nodejs ?***
+
+const Stream = require('stream');
+
+    const reader = new Stream.Readable({
+        read: (){}
+    })
+    reader.on("data", (data) => {
+        console.log(data);
+    })
+
+    reader.on("readable", (data) => {
+        reader.read();
+    })
+    reader.push('first line')
+    reader.push('second line)
+    reader.push(null);  // indicates no more data present
+
+    const writer = new Stream.Writable({
+        write: (chunk, encoding, cb){}
+    })
+
+    reader.pipe(writer);
+
+    writer.on("drain")
+    writer.on("finish")
+    writer.write(data, "utf8", cb)
+    writer.end()
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
