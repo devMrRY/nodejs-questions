@@ -31,6 +31,9 @@
 | 25. |[What are Stubs in Nodejs ?](#q-what-are-stubs-in-nodejs-)|
 | 26. |[Explain Execution Context in js ?](#q-explain-execution-context-in-js-)|
 | 27. |[What is Scope Chain ?](#q-what-is-scope-chain-)|
+| 28. |[Explain Socket in nodejs ?](#q-explain-socket-in-nodejs-)|
+| 29. |[Events in nodejs ?](#q-events-in-nodejs-)|
+| 29. |[FileSystem module in nodejs ?](#q-filesystem-module-in-nodejs-)|
 
 <br/>
 
@@ -406,7 +409,7 @@ instance.
 
             // Fork workers.
             for (let i = 0; i < numCPUs; i++) {
-                cluster.fork();
+                let worker = cluster.fork();
             }
 
             cluster.on('exit', (worker, code, signal) => {
@@ -421,6 +424,13 @@ instance.
         }
 
 cluster.fork() method uses the child_process.fork() method.
+
+cluster.workers()   // returns an array of workers
+cluster.on("listening", (worker) => {})
+cluster.on("exit", (worker) => {})
+worker.on("message", () => {})
+worker.on("disconnect", () => {})
+process.send({ cmd: "any data" })
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
@@ -455,13 +465,14 @@ It is same like child_process.fork() method as it also establish a connection am
         if (isMainThread) {
             const worker = new Worker(__filename);
             worker.once('message', (message) => {
-                console.log(message);  // Prints 'Hello, world!'.
+                console.log(message);  // Prints 'message received from parent successfully'.
             });
             worker.postMessage('Hello, world!');
         } else {
-            // When a message from the parent thread is received, send it back:
+            // When a message from the parent thread is received, send acknowledgement:
             parentPort.once('message', (message) => {
-                parentPort.postMessage(message);
+                console.log(message)    // Prints 'Hello, world!'.
+                parentPort.postMessage('message received from parent successfully');
             });
         }
 
@@ -501,6 +512,7 @@ SIGKILL also used for program termination but it can't handled, blocked or ignor
                 mongoose.connection.close(false, () => {
                     console.log('MongoDb connection closed.');
                     process.exit(0);
+                    //process.exit(1);   // used to indicate that some error occured.
                 });
             });
         });
@@ -653,6 +665,155 @@ In Execution Phase all the values gets initialized and ExecutionContext object g
 ## Q. ***What is Scope Chain ?***
 
 It's a chain used by Js to access variables present outside the local scope of a function/block with each Execution Context there's a lexical scope. which is a reference to it parent. Global Execution Context has null as it's lexical scope.
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***Explain Socket in nodejs ?***
+
+    *********************** SERVER ************************
+
+    const express = require("express");
+    const app = express();
+
+    const server = require("http").createServer(app);
+    const socketio = require("socket.io");
+    const io = socketio(server, { cors: { origin : "*"}});
+
+    server.listen(5000, () => {
+        console.info("server is running on port 5000");
+    });
+
+    io.on("connection", (socket) => {
+        console.log("connected", socket.id);
+        
+        socket.on('join', function (data) {
+            socket.join(data.email); // We are using room of socket io
+        });
+
+        socket.on("message", (data) => {
+            console.log(data)
+            io.emit("respond", 'hi rahul');
+        });
+
+        socket.emit("test", {data: "test data"})   // to send to all the connected users
+
+        socket.braodcast.emit("test", {data: "test data"})   // to send to all the connected users except the sender.
+
+        socket.in('user1@example.com').emit('new_msg', {msg: 'hello'});
+
+        socket.on("disconnect", () => {
+            console.log("server disconnected");
+        });
+    });
+
+    ******************************* CLIENT *********************************
+
+    import socketClient from 'socket.io-client';
+
+    const Socket = () => {
+        const io = socketClient ('http://localhost:5000',{
+            reconnectionDelay: 1000,
+            reconnection: true,
+            reconnectionAttemps: 10,
+            transports: ['websocket'],
+            agent: false,
+            upgrade: false,
+            rejectUnauthorized: false
+        });
+
+        io.emit('join', {email: user1@example.com});
+
+        io.emit("message", "hi rahul here")
+        io.on("respond", (data)=>{
+            console.log(data)
+        })
+
+        io.on("new_msg", function(data) {
+            alert(data.msg);
+        }
+        return (
+            <div>
+                socket
+            </div>
+        )
+    }
+
+    export default Socket;
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+
+## Q. ***Events in nodejs ?***
+
+const Events = require('events');
+
+class EventEmitter extends Events {}
+
+const ev = new EventEmitter();
+
+ev.on("event type", () => {})
+ev.once("event type", () => {})     // used to listen only once after first time event will reject
+ev.emit("event type", () => {})
+ev.prependListener("event type", () => {})  // appends listener at the starting of the listner queue
+ev.removeListener("event type", () => {})
+ev.removeAllListener(["event type"])
+ev.addListener("event name", () => {})
+ev.eventNames()     // return all the type of events add to the instance
+ev.setMaxListeners(n)       // default listeners to an event is 10
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***FileSystem module in nodejs ?***
+
+const fs = require('fs');
+
+fs.open("file path", (err, fd) => {})   // fd is a +ve integer defaults to 3 as 0-2 is occupied by stdout, stdin, stderr.
+
+fs.readFile("file path", (err, data) => {
+    console.log(data.toString())
+})
+fs.read(fd, buffer, offset, length, position, callback);
+// offset for writing position
+// position for reading position
+
+fs.writeFile("file path", "new text to replace old data", (err) => {
+    if(!err){
+        console.log('data written successfully');
+    }
+})
+fs.appendFile("file path", "new text to add to old data", (err) => {
+    if(!err){
+        console.log('data written successfully');
+    }
+})
+fs.unlink("file path")
+fs.close(fd, (err) => {})
+fs.rename("old path", "new path", () => {})     // also used for moving the file
+const readStream = fs.createReadStream('file path');
+    readStream.on("error");
+    readStream.on("data");
+    readStream.on("close");
+    readStream.pipe(writeStream);
+
+const writeStream = fs.createWriteStream('file path');
+
+fs.copyFile("src path", "dest path", (err, data) => {})
+fs.mkdir("dir path", mode, cb)
+fs.rmdir("dir path", { recursive: true, retrydelay: 1000, retryCount: 10}, cb)
+fs.watchFile("file path", { persistent: true, interval: 4000 }, (prev, next) => {
+    console.log("Previous Modified Time", prev.mtime);
+    console.log("Current Modified Time", curr.mtime);
+})
+
+fs.watch("file path", options, listener)  // new version for fs.watchFile unlike fs.watchFile it doesn't waste cpu when there's no change
+
+fs.unwatchFile("file path", listener)   // only those listener will stop detecting changes of the file rest will keep on listening the changes.
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
