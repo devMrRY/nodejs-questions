@@ -449,69 +449,69 @@ computation.
 3. spawn :- It spawns a command in new process and returns stream interface to exchange data btw parent and child process, which is why it is the best fit to read/load huge data operations.
 4. fork :- It is a special case of spawn used for establishing communication between parent and child process. It returns an object with built-in communication channel.
 
-    const { exec, execFile, spawn, fork } = require('child_process);
+        const { exec, execFile, spawn, fork } = require('child_process);
 
-    exec("ls -lh", (error, stdout, stderr) => {
-        if(error){
-            return console.log('error', error);
+        exec("ls -lh", (error, stdout, stderr) => {
+            if(error){
+                return console.log('error', error);
+            }
+            if(stderr){
+                return console.log('stderr', stderr);
+            }
+            console.log(stdout);
+        })
+
+        execFile("filePath", (error, stdout, stderr) => {
+            if(error){
+                return console.log('error', error);
+            }
+            if(stderr){
+                return console.log('stderr', stderr);
+            }
+            console.log(stdout);
+        })
+
+        const child = spawn("ls", ["-lh"]);
+        child.stdout.on("data", (data) => {
+            console.log(data)
+        })
+
+        child.stderr.on("data", (data) => {
+            console.log(data)
+        })
+
+        child.on("error", (error) => {
+            console.log(error)
+        })
+
+        child.on("exit", (code, signal) => {
+            if(code) console.log(`process exited with code: ${code}`);
+            if(signal) console.log(`process exited with signal: ${signal}`);
+            console.log('done');
+        })
+
+        const child = fork("./longComputation.js");
+        child.send("start");
+        child.on("message", (msg) => {
+            console.log(msg);
+        })
+
+        longComputation.js
+
+        function compute (){
+            let sum=0;
+            for(let i=0; i<1e9; i++){
+                sum+=i
+            }
+            return sum;
         }
-        if(stderr){
-            return console.log('stderr', stderr);
-        }
-        console.log(stdout);
-    })
 
-    execFile("filePath", (error, stdout, stderr) => {
-        if(error){
-            return console.log('error', error);
-        }
-        if(stderr){
-            return console.log('stderr', stderr);
-        }
-        console.log(stdout);
-    })
-
-    const child = spawn("ls", ["-lh"]);
-    child.stdout.on("data", (data) => {
-        console.log(data)
-    })
-
-    child.stderr.on("data", (data) => {
-        console.log(data)
-    })
-
-    child.on("error", (error) => {
-        console.log(error)
-    })
-
-    child.on("exit", (code, signal) => {
-        if(code) console.log(`process exited with code: ${code}`);
-        if(signal) console.log(`process exited with signal: ${signal}`);
-        console.log('done');
-    })
-
-    const child = fork("./longComputation.js");
-    child.send("start");
-    child.on("message", (msg) => {
-        console.log(msg);
-    })
-
-    longComputation.js
-
-    function compute (){
-        let sum=0;
-        for(let i=0; i<1e9; i++){
-            sum+=i
-        }
-        return sum;
-    }
-
-    process.on("message", () => {
-        if(msg === "start"){
-            let sum = compute();
-            process.send(sum)
-        }
-    })
+        process.on("message", () => {
+            if(msg === "start"){
+                let sum = compute();
+                process.send(sum)
+            }
+        })
 
 **Note** :- In windows .bat, .cmd files are not executable by execFile function as these files can't be run without terminal. so
 they can be executed by spawn function with { shell: true } argument or with exec function or by calling .exe file with these files as argument.
