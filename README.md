@@ -33,7 +33,7 @@
 | 27. |[What is Scope Chain ?](#q-what-is-scope-chain-)|
 | 28. |[Explain Socket in nodejs ?](#q-explain-socket-in-nodejs-)|
 | 29. |[Events in nodejs ?](#q-events-in-nodejs-)|
-| 29. |[FileSystem module in nodejs ?](#q-filesystem-module-in-nodejs-)|
+| 30. |[FileSystem module in nodejs ?](#q-filesystem-module-in-nodejs-)|
 
 <br/>
 
@@ -771,49 +771,49 @@ ev.setMaxListeners(n)       // default listeners to an event is 10
 
 ## Q. ***FileSystem module in nodejs ?***
 
-const fs = require('fs');
+    const fs = require('fs');
 
-fs.open("file path", (err, fd) => {})   // fd is a +ve integer defaults to 3 as 0-2 is occupied by stdout, stdin, stderr.
+    fs.open("file path", (err, fd) => {})   // fd is a +ve integer defaults to 3 as 0-2 is occupied by stdout, stdin, stderr.
 
-fs.readFile("file path", (err, data) => {
-    console.log(data.toString())
-})
-fs.read(fd, buffer, offset, length, position, callback);
-// offset for writing position
-// position for reading position
+    fs.readFile("file path", (err, data) => {
+        console.log(data.toString())
+    })
+    fs.read(fd, buffer, offset, length, position, callback);
+    // offset for writing position
+    // position for reading position
 
-fs.writeFile("file path", "new text to replace old data", (err) => {
-    if(!err){
-        console.log('data written successfully');
-    }
-})
-fs.appendFile("file path", "new text to add to old data", (err) => {
-    if(!err){
-        console.log('data written successfully');
-    }
-})
-fs.unlink("file path")
-fs.close(fd, (err) => {})
-fs.rename("old path", "new path", () => {})     // also used for moving the file
-const readStream = fs.createReadStream('file path');
-    readStream.on("error");
-    readStream.on("data");
-    readStream.on("close");
-    readStream.pipe(writeStream);
+    fs.writeFile("file path", "new text to replace old data", (err) => {
+        if(!err){
+            console.log('data written successfully');
+        }
+    })
+    fs.appendFile("file path", "new text to add to old data", (err) => {
+        if(!err){
+            console.log('data written successfully');
+        }
+    })
+    fs.unlink("file path")
+    fs.close(fd, (err) => {})
+    fs.rename("old path", "new path", () => {})     // also used for moving the file
+    const readStream = fs.createReadStream('file path');
+        readStream.on("error");
+        readStream.on("data");
+        readStream.on("close");
+        readStream.pipe(writeStream);
 
-const writeStream = fs.createWriteStream('file path');
+    const writeStream = fs.createWriteStream('file path');
 
-fs.copyFile("src path", "dest path", (err, data) => {})
-fs.mkdir("dir path", mode, cb)
-fs.rmdir("dir path", { recursive: true, retrydelay: 1000, retryCount: 10}, cb)
-fs.watchFile("file path", { persistent: true, interval: 4000 }, (prev, next) => {
-    console.log("Previous Modified Time", prev.mtime);
-    console.log("Current Modified Time", curr.mtime);
-})
+    fs.copyFile("src path", "dest path", (err, data) => {})
+    fs.mkdir("dir path", mode, cb)
+    fs.rmdir("dir path", { recursive: true, retrydelay: 1000, retryCount: 10}, cb)
+    fs.watchFile("file path", { persistent: true, interval: 4000 }, (prev, next) => {
+        console.log("Previous Modified Time", prev.mtime);
+        console.log("Current Modified Time", curr.mtime);
+    })
 
-fs.watch("file path", options, listener)  // new version for fs.watchFile unlike fs.watchFile it doesn't waste cpu when there's no change
+    fs.watch("file path", options, listener)  // new version for fs.watchFile unlike fs.watchFile it doesn't waste cpu when there's no change
 
-fs.unwatchFile("file path", listener)   // only those listener will stop detecting changes of the file rest will keep on listening the changes.
+    fs.unwatchFile("file path", listener)   // only those listener will stop detecting changes of the file rest will keep on listening the changes.
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
