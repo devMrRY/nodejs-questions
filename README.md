@@ -35,6 +35,7 @@
 | 29. |[Events in nodejs ?](#q-events-in-nodejs-)|
 | 30. |[FileSystem module in nodejs ?](#q-filesystem-module-in-nodejs-)|
 | 31. |[Streams in nodejs ?](#q-streams-in-nodejs-)|
+| 32. |[React Testing Library ?](#q-react-testing-library-)|
 
 <br/>
 
@@ -916,6 +917,62 @@ const Stream = require('stream');
     writer.write(data, "utf8", cb)
     writer.end()
 
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
+## Q. ***React Testing Library ?***
+import React from 'react';
+import ReactDom from 'react-dom';
+import Button from '../Button';
+
+import {render, cleanup} from '@testing-library/react';
+import 'jest-dom/extend-expect';
+import renderer from 'react-test-renderer';
+import axios from 'axios';
+jest.mock('axios');
+
+aftereEach(cleanup);
+
+it("renders without crash", () => {
+    const el = document.createElement("div");
+    ReactDom.render(<Button></Button>, el);
+})
+
+it("renders button correctly", () => {
+    const {getByTestId} = render(<Button label="this is label"></Button>);
+    expect(getByTestId('button')).toHaveTextContent("this is label");
+})
+
+it("renders button correctly", () => {
+    const {getByTestId} = render(<Button label="save"></Button>);
+    expect(getByTestId('button')).toHaveTextContent("save");
+})
+
+it("matches snapshot 1", () => {
+    const tree = renderer.create(<Button label="save"></Button>).toJSON();
+    expect(tree).toMatchSnapshot();
+})
+
+it("matches snapshot 2", () => {
+    const tree = renderer.create(<Button label="new label"></Button>).toJSON();
+    expect(tree).toMatchSnapshot();
+})
+
+describe("mock api calls", () => {
+    test("mocking external endpt in axios", () => {
+        const mockResponse = {data: {username: 'rahul', address: "India"}}
+        axios.get.mockResolvedValue(mockResponse);
+        const app = require('../app.js');
+
+        app.getUserData();
+
+        expect(axios.get).toHaveBeenCalled()
+        expect(axios.get).toHaveBeenCalledWith('https://regres.in/api/users/2');
+    })
+});
+
+**Note**: 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
 </div>
