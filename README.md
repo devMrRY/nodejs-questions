@@ -107,6 +107,14 @@ node.js uses 3 techniques for garbage collecting
 
 **Concurent** : In this main thread is not disturbed and all the garbage collection handled by helper threads.
 
+js uses 2 diff approaches for garbage collection
+
+1. count the reference: store the count of references of all the functions and variables and when there's no count of refernce is 0 then garbage collection the function/variable.
+
+drawback: fail when cyclic reference is present
+
+2. mark and sweep: create a tree and when there's no branch present for function/variable then mark it and garbage collector will release the memory.
+
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
 </div>
