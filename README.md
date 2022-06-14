@@ -42,14 +42,16 @@
 ## Q. ***How V8 compiles the js code ?***
 
 Parsing the code
+
 Compiling the code
+
 Executing the code
 
 1. Parsing splits all the code into small tokens and these token are then transfered to syntax parser which will create abstract syntax tree (AST).
 
-2. V8 uses JIT compiler takes in which interpretetion and compiling goes hand in hand like
+2. V8 uses JIT compiler in which interpretetion and compiling goes hand in hand like
     first inerpretor checks for the patterns that are frequently used like variables, functions and compiles the code to optimize the process if type of variable or function arguments changes then 
-    decompilation takes place the and control shifts to interpretetion again.
+    decompilation takes place and control shifts to interpretetion again.
 
     V8 uses Ignition interpretor which takes AST as input and gives byte code as output while interpretion is taking place Turbofan compiler communicates with interpretor and converts byte
     code into machine code.
