@@ -41,10 +41,8 @@
 
 ## Q. ***How V8 compiles the js code ?***
 
-Parsing the code
-
-Compiling the code
-
+Parsing the code<br/>
+Compiling the code<br/>
 Executing the code
 
 1. Parsing splits all the code into small tokens and these token are then transfered to syntax parser which will create abstract syntax tree (AST).
