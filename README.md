@@ -435,11 +435,11 @@ instance.
 
 cluster.fork() method uses the child_process.fork() method.
 
-cluster.workers()   // returns an array of workers
-cluster.on("listening", (worker) => {})
-cluster.on("exit", (worker) => {})
-worker.on("message", () => {})
-worker.on("disconnect", () => {})
+cluster.workers()   // returns an array of workers<br/>
+cluster.on("listening", (worker) => {})<br/>
+cluster.on("exit", (worker) => {})<br/>
+worker.on("message", () => {})<br/>
+worker.on("disconnect", () => {})<br/>
 process.send({ cmd: "any data" })
 
 <div align="right">
