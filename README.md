@@ -36,7 +36,7 @@
 | 30. |[FileSystem module in nodejs ?](#q-filesystem-module-in-nodejs-)|
 | 31. |[Streams in nodejs ?](#q-streams-in-nodejs-)|
 | 32. |[React Testing Library ?](#q-react-testing-library-)|
-| 32. |[SEO affecting factors ?](#q-seo-affecting-factors-)|
+| 33. |[SEO affecting factors ?](#q-seo-affecting-factors-)|
 
 | . |[What is feature toggling ?](#q-what-is-feature-toggling-)|
 | . |[Improve Bundling process ?](#q-what-is-feature-toggling-)|
