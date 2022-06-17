@@ -37,6 +37,7 @@
 | 31. |[Streams in nodejs ?](#q-streams-in-nodejs-)|
 | 32. |[React Testing Library ?](#q-react-testing-library-)|
 | 33. |[SEO affecting factors ?](#q-seo-affecting-factors-)|
+| 34. |[React SSR ?](#q-react-ssr-)|
 
 | . |[What is feature toggling ?](#q-what-is-feature-toggling-)|
 | . |[Improve Bundling process ?](#q-what-is-feature-toggling-)|
@@ -1002,3 +1003,17 @@ afterEach(cleanup);
     <b><a href="#">↥ back to top</a></b>
 </div>
 
+
+## Q. ***React SSR ?***
+
+// on server side
+ReactDomServer
+renderToPipeableStream();   //node.js env with node stream
+renderToReadableStream();   //Deno.js, browsers envs with web streams
+
+// on client side
+hydrateRoot() instead of ReactDom.render() or ReactDom.createRoot()
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
