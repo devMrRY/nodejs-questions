@@ -36,6 +36,10 @@
 | 30. |[FileSystem module in nodejs ?](#q-filesystem-module-in-nodejs-)|
 | 31. |[Streams in nodejs ?](#q-streams-in-nodejs-)|
 | 32. |[React Testing Library ?](#q-react-testing-library-)|
+| 32. |[SEO affecting factors ?](#q-seo-affecting-factors-)|
+
+| . |[What is feature toggling ?](#q-what-is-feature-toggling-)|
+| . |[Improve Bundling process ?](#q-what-is-feature-toggling-)|
 
 <br/>
 
@@ -984,3 +988,17 @@ afterEach(cleanup);
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
 </div>
+
+## Q. ***SEO affecting factors ?***
+
+1. First Contentful Paint: 
+2. Time to Interactive: 
+3. Total blocking Time: 
+4. Largest Contentful Paint: 
+5. Cumulative Layout Shift: eg:- if user reading a blog and then a banner/image loads then blog move down which is bad and CLS score would be more.
+6. Speed Index: 
+
+<div align="right">
+    <b><a href="#">↥ back to top</a></b>
+</div>
+
