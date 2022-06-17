@@ -959,12 +959,28 @@ afterEach(cleanup);
 
     it("renders button correctly", () => {
         const {getByTestId} = render(<Button label="save"></Button>);
+        expect(getByTestId('button')).toBeTruthy();
         expect(getByTestId('button')).toHaveTextContent("save");
     })
 
     it("matches snapshot 1", () => {
-        const tree = renderer.create(<Button label="save"></Button>).toJSON();
+        const component = renderer.create(<Button label="save"></Button>)
+        let tree = component.toJSON();
         expect(tree).toMatchSnapshot();
+
+        renderer.act(() => {
+            tree.props.onMouseEnter();
+        })
+
+        tree = component.toJSON();
+        expect(tree).toMatchSnapShot();
+
+        renderer.act(() => {
+            tree.props.onMouseLeave();
+        })
+
+        tree = component.toJSON();
+        expect(tree).toMatchSnapShot();
     })
 
     it("matches snapshot 2", () => {
