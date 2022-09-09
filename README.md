@@ -565,7 +565,7 @@ It is same like child_process.fork() method as it also establish a connection am
 
 ## Q. ***What is Thread pool ?***
 
-Thread pool is used by libuv to do I/O operations faster. default thread size is 4 but can be increase to 128 by setting the value of UV_THREADPOOL_SIZE env variable.
+Thread pool is used by libuv to do I/O operations faster. default thread size is 4 but can be increase to 128 by setting the value of process.env.UV_THREADPOOL_SIZE= any number.
 
 **Note**: You cannot change the size of the thread pool once it is created or entered in the event-loop/worker-thread.
 
@@ -1038,7 +1038,7 @@ hydrateRoot() instead of ReactDom.render() or ReactDom.createRoot()
 
 4 bytes: timestamp<br/>
 5 bytes: random value generated from process id<br/>
-3 bytes: incrementing counder 
+3 bytes: incrementing counter 
 
 <div align="right">
     <b><a href="#">↥ back to top</a></b>
